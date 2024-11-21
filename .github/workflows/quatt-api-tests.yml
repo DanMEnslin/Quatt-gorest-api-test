@@ -1,0 +1,23 @@
+name: Quatt API Tests
+
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    environment: Production
+    name: "Run tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - name: Installation of related packages
+        run: npm ci
+      - name: RUN SuperTest API Tests
+        run: npm test
+      - name: Save html report
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-results-report
+          path: api-tests/QuattTestDanielE-*.html
