@@ -20,7 +20,8 @@ jobs:
       - name: RUN SuperTest API Tests
         run: npm test
       - name: Save html report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@master
         with:
-          name: api-test-results-report
-          path: api-tests/QuattTestDanielE-*.html
+          name: allure-results
+          path: allure-results
+          retention-days: 20
