@@ -7,6 +7,9 @@ jobs:
     environment: Production
     name: "Run tests"
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
+      BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
