@@ -10,7 +10,7 @@ const bearerToken: string = ENV.BEARER_TOKEN;
 const request = supertest(baseUrl);
 
 describe("Tests for the creation of user posts & comments", () => {
-  it("should create a user post for the created user", async () => {
+  it("Create user post request should create a post for the specified user", async () => {
     const user = createUser();
     const createUserResponse = await request
       .post(`/users`)
@@ -33,8 +33,7 @@ describe("Tests for the creation of user posts & comments", () => {
       body: userPost.body,
     });
   });
-  it("should create a user comment for the created user comment", async () => {
-    //should this fail? there is no data to return
+  it("Create user post comment request should create a user comment on the specified user post", async () => {
     const user = createUser();
     const createUserResponse = await request
       .post(`/users`)

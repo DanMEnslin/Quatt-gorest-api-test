@@ -18,7 +18,7 @@ jobs:
       - name: Installation of related packages
         run: npm ci
 
-      - name: RUN SuperTest API Tests
+      - name: Run Quatt gorest API Tests
         run: npm test
 
       - uses: actions/upload-artifact@master
@@ -34,7 +34,7 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Test marketplace action
+      - name: Build test report
         uses: simple-elf/allure-report-action@master
         if: always()
         id: allure-report

@@ -8,8 +8,8 @@ const bearerToken: string = ENV.BEARER_TOKEN;
 const request = supertest(baseUrl);
 const userIdArray: number[] = [];
 
-describe("Create User tests", () => {
-  it("Create user should create a new user", async () => {
+describe("Tests for the creation and amending of Users, with", () => {
+  it("Create user request should create a new user", async () => {
     const user = createUser();
     const response = await request
       .post(`/users`)
@@ -25,7 +25,7 @@ describe("Create User tests", () => {
     });
     userIdArray.push(response.body.id);
   });
-  it("Get unique user details should return expected user details", async () => {
+  it("requesting a specific user should return expected user details", async () => {
     const user = createUser();
     const createUserResponse = await request
       .post(`/users`)
@@ -55,7 +55,7 @@ describe("Create User tests", () => {
       status: user.status,
     });
   });
-  it("POST create user should fail due to already used email address", async () => {
+  it("Create user request should fail if the email address has been used previously", async () => {
     const user = createUser();
     const initialCreateUserResponse = await request
       .post(`/users`)
@@ -67,6 +67,7 @@ describe("Create User tests", () => {
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })
       .send(user);
+
     expect(repeatedCreateUserResponse.status).toBe(422);
     expect(repeatedCreateUserResponse.headers["content-type"]).toMatch(/json/);
     expect(repeatedCreateUserResponse.body).toContainEqual(
@@ -76,8 +77,9 @@ describe("Create User tests", () => {
       })
     );
   });
-  it("PUT update user should update name of user", async () => {
+  it("Updating a user's name should return the updated user details", async () => {
     const user = createUser();
+
     const createUserResponse = await request
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })
@@ -100,7 +102,7 @@ describe("Create User tests", () => {
       status: user.status,
     });
   });
-  it("POST create user should fail due to invalid bearer token", async () => {
+  it("Create user request should fail due to invalid bearer token", async () => {
     const user = createUser();
     const fakeBearerToken = faker.internet.jwt();
     const response = await request
@@ -115,7 +117,7 @@ describe("Create User tests", () => {
       })
     );
   });
-  it("Deleting user should remove the created user", async () => {
+  it("Deleting the user should remove the created user", async () => {
     const user = createUser();
     const createUserResponse = await request
       .post(`/users`)
@@ -138,7 +140,7 @@ describe("Create User tests", () => {
       message: "Resource not found",
     });
   });
-  it("Deleting user should fail if invalid auth token", async () => {
+  it("Deleting the user should fail if invalid auth token", async () => {
     const user = createUser();
     const createUserResponse = await request
       .post(`/users`)
