@@ -17,10 +17,27 @@ jobs:
           node-version: "18"
       - name: Installation of related packages
         run: npm ci
-      - name: RUN SuperTest API Tests
-        run: npm test
-      - name: Save html report
-        uses: actions/upload-artifact@master
+
+      - name: Load test report history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
         with:
-          name: allure-results
-          path: allure-results
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: build/allure-results
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
