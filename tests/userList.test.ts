@@ -65,7 +65,6 @@ describe("GET user list", () => {
     const response = await request
       .get("/users")
       .auth(fakeBearerToken, { type: "bearer" });
-    console.log(response.body);
     expect(response.status).toBe(401);
     expect(response.body).toEqual(
       expect.objectContaining({

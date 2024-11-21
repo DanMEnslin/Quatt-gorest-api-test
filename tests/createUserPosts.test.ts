@@ -59,12 +59,10 @@ describe("Tests for the creation of user posts & comments", () => {
 
     const postId = createUserPostResponse.body.id;
     const userComment = createUserComment();
-    console.log(userComment);
     const createUserCommentResponse = await request
       .post(`/posts/${postId}/comments`)
       .auth(bearerToken, { type: "bearer" })
       .send(userComment);
-    console.log(createUserCommentResponse);
     expect(createUserCommentResponse.status).toBe(201);
     expect(createUserCommentResponse.headers["content-type"]).toMatch(/json/);
     expect(createUserCommentResponse.body).toMatchObject({
