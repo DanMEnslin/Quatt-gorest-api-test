@@ -18,7 +18,6 @@ describe("Tests for the creation and requesting user Todos", () => {
 
     const userId = createUserResponse.body.id;
     const userTodo = createUserTodo(userId);
-    console.log(userTodo);
 
     const createUserTodoResponse = await request
       .post(`/users/${userId}/todos`)
