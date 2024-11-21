@@ -18,8 +18,11 @@ jobs:
       - name: Installation of related packages
         run: npm ci
 
+      - name: RUN SuperTest API Tests
+        run: npm test
+
       - name: Load test report history
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: always()
         continue-on-error: true
         with:
@@ -34,8 +37,8 @@ jobs:
           allure_history: allure-history
           allure_results: build/allure-results
 
-      - name: Uploadtest report to GitHub
+      - name: Upload test report to GitHub
         uses: actions/upload-artifact@v4
         with:
-          name: SuperTest-test-report
+          name: Quatt-gorest-test-report
           path: allure-report
