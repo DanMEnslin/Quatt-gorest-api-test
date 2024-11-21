@@ -21,24 +21,11 @@ jobs:
       - name: RUN SuperTest API Tests
         run: npm test
 
-      - name: Load test report history
-        uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: main
-          path: gh-pages
-
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
+      - name: Generate Allure test report
+        uses: andgineer/allure-report@v3.4
+        id: allure-report
         if: always()
         with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: build/allure-results
-
-      - name: Upload test report to GitHub
-        uses: actions/upload-artifact@v4
-        with:
-          name: Quatt-gorest-test-report
-          path: allure-report
+          allure-results: allure-results
+          website: gh-pages-dir
+          reports-site-path: builds/tests
