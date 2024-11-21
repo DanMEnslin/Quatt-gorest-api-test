@@ -19,7 +19,7 @@ jobs:
         run: npm ci
 
       - name: Load test report history
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
         if: always()
         continue-on-error: true
         with:
