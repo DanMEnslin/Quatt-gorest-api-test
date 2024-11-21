@@ -42,7 +42,6 @@ describe("Create User tests", () => {
 
     const userId = createUserResponse.body.id;
     userIdArray.push(userId);
-    console.log(userIdArray);
 
     const getUserResponse = await request
       .get(`/users/${userId}`)
@@ -108,7 +107,7 @@ describe("Create User tests", () => {
       .post(`/users`)
       .auth(fakeBearerToken, { type: "bearer" })
       .send(user);
-    console.log(response.body);
+
     expect(response.status).toBe(401);
     expect(response.body).toEqual(
       expect.objectContaining({
