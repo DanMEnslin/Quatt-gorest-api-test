@@ -72,6 +72,8 @@ I think the structure is pretty self-explanatory, with tests in their own tests 
 
 ### Bugs & issues
 
+- The create user POST occasionally fails with a 422 for some unknown reason; the data is fine
+- User post POSTs do not seem to be idempotent; you can post the same post multiple times. The same is true of user comments and user todo's
 - The most problematic issue I ran into was the todo get request returns a json object containing a json timestamp with a local timezone (I am guessing set to "Asia/Kolkata"). Converting and matching to a locally generated Date object is extremely difficult, as a local Date object will always be created in the local timezone, and is not easy to convert. I tried third party modules like Luxon, but this didn't help, and held me up for quite a while before I gave up
 - There is no way to amend Todo's; at least I don't see an api call for this action, so I don't know how you'd update todo's from `pending` to `completed`
 - Minor one, `content-type` header is returned in lower case, but if you try the request in Postman it's capitalised; this affected my expects initially till I logged the response body
