@@ -79,3 +79,14 @@ I think the structure is pretty self-explanatory, with tests in their own tests 
 - Minor one, `content-type` header is returned in lower case, but if you try the request in Postman it's capitalised; this affected my expects initially till I logged the response body
 - The `POST /public/v2/posts/6942470/comments` documentation implies you create a post with the `user_id`, but its actually the `post_id`, this got me for a while but I eventually figured it out
 - The gorest site is not stable; on one day alone it was down for almost 3 hours
+
+## Further improvements
+
+I would add the following with more time:
+
+- Switch to seeded data rather than FakerJS
+- Create a util to provide url's for ease of maintenance
+- Negative paths for all known response codes
+- Invalid auth test cases for all requests
+- Tests for idempotency for all posts
+- More user search/update options, for example email & gender
