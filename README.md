@@ -84,7 +84,8 @@ I think the structure is pretty self-explanatory, with tests in their own tests 
 
 I would add the following with more time:
 
-- Switch to seeded data rather than FakerJS
+- Switch to seeded data rather than FakerJS, and thus better follow best practices like before/after hooks
+- Add a request factory to separate test structure from functionality and make tests more maintainable
 - Create a util to provide url's for ease of maintenance
 - Negative paths for all known response codes
 - Invalid auth test cases for all requests
