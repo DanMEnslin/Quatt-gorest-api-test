@@ -1,15 +1,19 @@
 import * as supertest from "supertest";
 import ENV from "../utils/env";
-import { createUser } from "../data/createUserDto";
+import { createUser, CreateUserDto } from "../data/createUserDto";
 import { createUserTodo } from "../data/createUserTodoDto";
 
 const baseUrl: string = ENV.BASE_URL;
 const bearerToken: string = ENV.BEARER_TOKEN;
 const request = supertest(baseUrl);
+let user: CreateUserDto;
 
 describe("Tests for the creation and requesting of user Todos", () => {
+  beforeEach(() => {
+    user = createUser();
+  });
+
   it("Should create a user todo for the specified user", async () => {
-    const user = createUser();
     const createUserResponse = await request
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })
@@ -32,7 +36,6 @@ describe("Tests for the creation and requesting of user Todos", () => {
     });
   });
   it("should request a created user todo", async () => {
-    const user = createUser();
     const createUserResponse = await request
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })

@@ -1,17 +1,20 @@
 import * as supertest from "supertest";
 import ENV from "../utils/env";
-//import { faker } from "@faker-js/faker";
-import { createUser } from "../data/createUserDto";
+import { createUser, CreateUserDto } from "../data/createUserDto";
 import { createUserPost } from "../data/createUserPostDto";
 import { createUserComment } from "../data/createUserPostCommentDto";
 
 const baseUrl: string = ENV.BASE_URL;
 const bearerToken: string = ENV.BEARER_TOKEN;
 const request = supertest(baseUrl);
+let user: CreateUserDto;
 
 describe("Tests for the creation of user posts & comments", () => {
+  beforeEach(() => {
+    user = createUser();
+  });
+
   it("Create user post request should create a post for the specified user", async () => {
-    const user = createUser();
     const createUserResponse = await request
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })
@@ -34,7 +37,6 @@ describe("Tests for the creation of user posts & comments", () => {
     });
   });
   it("Create user post comment request should create a user comment on the specified user post", async () => {
-    const user = createUser();
     const createUserResponse = await request
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })

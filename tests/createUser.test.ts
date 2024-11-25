@@ -1,16 +1,19 @@
 import * as supertest from "supertest";
 import ENV from "../utils/env";
 import { faker } from "@faker-js/faker";
-import { createUser } from "../data/createUserDto";
+import { createUser, CreateUserDto } from "../data/createUserDto";
 
 const baseUrl: string = ENV.BASE_URL;
 const bearerToken: string = ENV.BEARER_TOKEN;
 const request = supertest(baseUrl);
 const userIdArray: number[] = [];
+let user: CreateUserDto;
 
 describe("Tests for the creation and amending of Users, with", () => {
+  beforeEach(() => {
+    user = createUser();
+  });
   it("Create user request should create a new user", async () => {
-    const user = createUser();
     const response = await request
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })
@@ -26,7 +29,6 @@ describe("Tests for the creation and amending of Users, with", () => {
     userIdArray.push(response.body.id);
   });
   it("requesting a specific user should return expected user details", async () => {
-    const user = createUser();
     const createUserResponse = await request
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })
@@ -56,7 +58,6 @@ describe("Tests for the creation and amending of Users, with", () => {
     });
   });
   it("Create user request should fail if the email address has been used previously", async () => {
-    const user = createUser();
     const initialCreateUserResponse = await request
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })
@@ -78,8 +79,6 @@ describe("Tests for the creation and amending of Users, with", () => {
     );
   });
   it("Updating a user's name should return the updated user details", async () => {
-    const user = createUser();
-
     const createUserResponse = await request
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })
@@ -103,7 +102,6 @@ describe("Tests for the creation and amending of Users, with", () => {
     });
   });
   it("Create user request should fail due to invalid bearer token", async () => {
-    const user = createUser();
     const fakeBearerToken = faker.internet.jwt();
     const response = await request
       .post(`/users`)
@@ -118,7 +116,6 @@ describe("Tests for the creation and amending of Users, with", () => {
     );
   });
   it("Deleting the user should remove the created user", async () => {
-    const user = createUser();
     const createUserResponse = await request
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })
@@ -141,7 +138,6 @@ describe("Tests for the creation and amending of Users, with", () => {
     });
   });
   it("Deleting the user should fail if invalid auth token", async () => {
-    const user = createUser();
     const createUserResponse = await request
       .post(`/users`)
       .auth(bearerToken, { type: "bearer" })
