@@ -91,3 +91,5 @@ I would add the following with more time:
 - Invalid auth test cases for all requests
 - Tests for idempotency for all posts
 - More user search/update options, for example email & gender
+
+Edit: I added a simple beforeEach to some spec files as I was bored
